@@ -10,10 +10,10 @@ class StartPage extends Component {
             <div className="inner-wrapper">
                 <Row>
                     <Col sm={4} smOffset={4}>
-                        <Link className="btn btn-lg btn-default btn-block" role="button" to="/signin">   
+                        <Link className="btn btn-lg btn-default btn-block" role="button" to="/ninja-app-lite/signin">   
                             SING IN
                         </Link>
-                        <Link className="btn btn-lg btn-default btn-block" role="button" to="/create-wallet">
+                        <Link className="btn btn-lg btn-default btn-block" role="button" to="/ninja-app-lite/create-wallet">
                             CREATE WALLET
                         </Link> 
                     </Col>

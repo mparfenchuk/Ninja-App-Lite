@@ -20,17 +20,11 @@ const history = syncHistoryWithStore(browserHistory, store)
 ReactDOM.render((
     <Provider store={store}> 
         <Router onUpdate={() => window.scrollTo(0, 0)} history={history}>
-            <Route path="/" component={App}>
+            <Route path="/ninja-app-lite/" component={App}>
                 <IndexRoute component={UserIsNotAuthenticated(StartPage)} />
-                <Route path="/signin" component={UserIsNotAuthenticated(LoginPage)} />
-                <Route path="/create-wallet" component={UserIsNotAuthenticated(RegistrationPage)} />
-                <Route path="/wallet" component={UserIsAuthenticated(WalletPage)} />
-                {/*
-                UserIsAuthenticated - WalletPage
-                UserIsNotAuthenticated - StartPage
-                UserIsNotAuthenticated - LoginPage
-                UserIsNotAuthenticated - RegistrationPage
-                */}
+                <Route path="/ninja-app-lite/signin" component={UserIsNotAuthenticated(LoginPage)} />
+                <Route path="/ninja-app-lite/create-wallet" component={UserIsNotAuthenticated(RegistrationPage)} />
+                <Route path="/ninja-app-lite/wallet" component={UserIsAuthenticated(WalletPage)} />
             </Route>
         </Router>
     </Provider>

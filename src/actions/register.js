@@ -44,7 +44,7 @@ export function register(inputUsername, inputFirstName, inputLastName, inputEmai
             if ('redirect' in currentLocation.query){
                 return browserHistory.push(decodeURIComponent(currentLocation.query.redirect))
             }
-            return browserHistory.push('/wallet')
+            return browserHistory.push('/ninja-app-lite/wallet')
         })
         .catch(function (error) {
             console.log(error.response);
