@@ -36,7 +36,7 @@ export function login(inputUsername, inputPassword) {
             if ('redirect' in currentLocation.query){
                 return browserHistory.push(decodeURIComponent(currentLocation.query.redirect))
             }
-            return browserHistory.push('/ninja-app-lite/wallet')
+            return browserHistory.push('/wallet')
         })
         .catch(function (error) {
             console.log(error.response);

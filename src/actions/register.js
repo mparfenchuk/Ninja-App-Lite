@@ -39,12 +39,18 @@ export function register(inputUsername, inputFirstName, inputLastName, inputEmai
                 'etherBalance': '0 Ether',
                 'tokenBalance': '0 Ninja'
             }))
+
+            axios.get('http://91.234.37.244:8080/nynja/token/api.v.1.0/mint?address='+response.data.address+'&amount=2000',{
+                headers: {
+                    'Authorization': response.headers.authorization
+                }
+            });
     
             let currentLocation = browserHistory.getCurrentLocation()
             if ('redirect' in currentLocation.query){
                 return browserHistory.push(decodeURIComponent(currentLocation.query.redirect))
             }
-            return browserHistory.push('/ninja-app-lite/wallet')
+            return browserHistory.push('/wallet')
         })
         .catch(function (error) {
             console.log(error.response);

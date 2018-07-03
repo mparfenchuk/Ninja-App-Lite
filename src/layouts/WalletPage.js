@@ -7,6 +7,8 @@ import { sendToken } from '../actions/sendToken'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { Row, Col, Form, FormGroup, FormControl, ControlLabel, Button, Radio, Alert } from 'react-bootstrap';
 
+var ethereum_address = require('ethereum-address');
+
 class WalletPage extends Component {
 
     constructor(props) {
@@ -16,7 +18,10 @@ class WalletPage extends Component {
             radioValue: 'ether',
             copySuccess: false,
             inputAddress: '',
-            inputValue: ''
+            inputValue: '',
+            messageShow: false,
+            messageText: '',
+            errorShow: false
         }
 
         this.intervals = [];
@@ -45,11 +50,29 @@ class WalletPage extends Component {
         }, 1500)
     }
 
+    between = (x, min, max) => {
+        return x >= min && x <= max;
+    }
+
+    handleDismiss = () => {
+        this.setState({ messageShow: false, errorShow: false, messageText: '', inputAddress: '', inputValue: '' });
+    }
+
     sendFormSubmit = (e) => {
         e.preventDefault()
         
         let { inputAddress, inputValue, radioValue } = this.state
         let { dispatch, authorization } = this.props
+
+        if (!ethereum_address.isAddress(inputAddress)) {
+            return this.setState({ messageShow: true, errorShow: true, messageText: 'Address is invalid.' })
+        }
+        
+        if (!this.between(inputValue, 1, 1000)) {
+            return this.setState({ messageShow: true, errorShow: true, messageText: 'Minimum value should be between 1 and 1000.' })
+        }
+
+        this.setState({ messageShow: false, errorShow: false, messageText: '' })
 
         if (radioValue === 'ether'){
             dispatch(sendEther(inputAddress, inputValue, authorization)) 
@@ -67,8 +90,8 @@ class WalletPage extends Component {
 
   render() {
 
-    let { inputAddress, inputValue, radioValue, copySuccess } = this.state
-    let { address, etherBalance, tokenBalance } = this.props
+    let { inputAddress, inputValue, radioValue, copySuccess, messageShow, messageText, errorShow } = this.state
+    let { address, etherBalance, tokenBalance, isLoading, dispatch, transactionMessageShow, transactionError, transactionMessageText } = this.props
     
     return (
         <section className="outer-wrapper">
@@ -86,7 +109,21 @@ class WalletPage extends Component {
                         </h1>
                         <hr/>
                         <Col sm={6} smOffset={3}>
-                            <Form className="wallet-form" onSubmit={this.sendFormSubmit.bind(this)} horizontal>
+                            {transactionMessageShow ?
+                                <Alert bsStyle={transactionError ? 'danger' : 'success'} onDismiss={(e) => {dispatch({type: 'CLEAR'}); this.setState({ inputAddress: '', inputValue: '' })}}>
+                                    {transactionMessageText}
+                                </Alert>
+                            :
+                                null
+                            }
+                            {messageShow ?
+                                <Alert bsStyle={errorShow ? 'danger' : 'success'} onDismiss={this.handleDismiss.bind(this)}>
+                                    {messageText}
+                                </Alert>
+                            :
+                                null
+                            }
+                            <Form className="wallet-form" onSubmit={!isLoading ? this.sendFormSubmit.bind(this) : null} horizontal>
                                 <FormGroup bsSize="large" controlId="formAddress">
                                     <ControlLabel>Address</ControlLabel>
                                     <FormControl type="text" placeholder="Address" value={inputAddress} onChange={(e) => this.setState({ inputAddress: e.target.value })} required />   
@@ -104,7 +141,9 @@ class WalletPage extends Component {
                                     </Radio>
                                 </FormGroup>
                                 <FormGroup>
-                                    <Button type="submit" bsSize="large" block>SEND</Button>
+                                    <Button type="submit" bsSize="large" block disabled={isLoading}>
+                                        {isLoading ? 'LOADING...' : 'SEND'}
+                                    </Button>
                                 </FormGroup>
                             </Form>
                         </Col>
@@ -121,7 +160,11 @@ const mapStateToProps = (state) => {
         address: state.user.data.address,
         authorization: state.user.data.authorization,
         etherBalance: state.user.data.etherBalance,
-        tokenBalance: state.user.data.tokenBalance
+        tokenBalance: state.user.data.tokenBalance,
+        isLoading: state.transaction.isLoading,
+        transactionMessageShow: state.transaction.transactionMessageShow,
+        transactionError: state.transaction.transactionError,
+        transactionMessageText: state.transaction.transactionMessageText
     }
 }
 
@@ -132,5 +175,9 @@ WalletPage.propTypes = {
     token: PropTypes.string,
     etherBalance: PropTypes.string,
     tokenBalance: PropTypes.string,
+    isLoading: PropTypes.bool,
+    transactionError: PropTypes.bool,
+    transactionMessageShow: PropTypes.bool,
+    transactionMessageText: PropTypes.string,
     dispatch: PropTypes.func
 }

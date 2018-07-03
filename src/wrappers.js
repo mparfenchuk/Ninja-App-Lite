@@ -9,14 +9,14 @@ const locationHelper = locationHelperBuilder({})
 export const UserIsAuthenticated = connectedRouterRedirect({
     authenticatedSelector: state => state.user.data !== null,
     redirectAction: routerActions.replace,
-    redirectPath: '/ninja-app-lite/signin',
+    redirectPath: '/signin',
     wrapperDisplayName: 'UserIsAuthenticated'
 })
 
 export const UserIsNotAuthenticated = connectedRouterRedirect({
     authenticatedSelector: state => state.user.data === null,
     redirectAction: routerActions.replace,
-    redirectPath: (state, ownProps) => locationHelper.getRedirectQueryParam(ownProps) || '/ninja-app-lite/wallet',
+    redirectPath: (state, ownProps) => locationHelper.getRedirectQueryParam(ownProps) || '/wallet',
     wrapperDisplayName: 'UserIsNotAuthenticated',
     allowRedirectBack: false
 })
