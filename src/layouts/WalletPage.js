@@ -73,12 +73,12 @@ class WalletPage extends Component {
         }
 
         this.setState({ messageShow: false, errorShow: false, messageText: '' })
-/*
+
         if (radioValue === 'ether'){
             dispatch(sendEther(inputAddress, inputValue, authorization)) 
         } else {
             dispatch(sendToken(inputAddress, inputValue, authorization)) 
-        }*/
+        }
     }
 
     componentWillUnmount(){
