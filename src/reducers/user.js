@@ -18,7 +18,7 @@ const user = (state = initialState, action) => {
                 username: state.data.username,
                 address: state.data.address,
                 email: state.data.email,
-                authorization: state.data.token,
+                authorization: state.data.authorization,
                 etherBalance: action.payload.etherBalance,
                 tokenBalance: action.payload.tokenBalance
             }

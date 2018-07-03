@@ -13,6 +13,7 @@ class LoginPage extends Component {
             inputUsername: '',
             inputPassword: ''
         }
+
     }
 
     loginFormSubmit = (e) => {
@@ -36,11 +37,11 @@ class LoginPage extends Component {
                         <Form onSubmit={this.loginFormSubmit.bind(this)} horizontal>
                             <FormGroup bsSize="large" controlId="formUsername">
                                 <ControlLabel>Username</ControlLabel>
-                                <FormControl type="text" placeholder="Username" value={inputUsername} onChange={(e) => this.setState({ inputUsername: e.target.value })} required />   
+                                <FormControl type="text" placeholder="Username" autoComplete='username' value={inputUsername} onChange={(e) => this.setState({ inputUsername: e.target.value })} required />   
                             </FormGroup>
                             <FormGroup bsSize="large" controlId="formPassword">
                                 <ControlLabel>Password</ControlLabel>
-                                <FormControl type="password" placeholder="Password" value={inputPassword} onChange={(e) => this.setState({ inputPassword: e.target.value })} required />   
+                                <FormControl type="password" placeholder="Password" autoComplete='current-password' value={inputPassword} onChange={(e) => this.setState({ inputPassword: e.target.value })} required />   
                             </FormGroup>
                             <FormGroup>
                                 <Button type="submit" bsSize="large" block>LOGIN</Button>

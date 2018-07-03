@@ -5,7 +5,7 @@ import { getBalance } from '../actions/getBalance'
 import { sendEther } from '../actions/sendEther'
 import { sendToken } from '../actions/sendToken'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
-import { Row, Col, Form, FormGroup, FormControl, ControlLabel, Button, Radio } from 'react-bootstrap';
+import { Row, Col, Form, FormGroup, FormControl, ControlLabel, Button, Radio, Alert } from 'react-bootstrap';
 
 class WalletPage extends Component {
 
@@ -18,13 +18,22 @@ class WalletPage extends Component {
             inputAddress: '',
             inputValue: ''
         }
+
+        this.intervals = [];
     }
 
-    componentWillMount(){
+    componentDidMount(){
 
         let { dispatch, address, authorization } = this.props
         
-        dispatch(getBalance(address, authorization))        
+        dispatch(getBalance(address, authorization))  
+        
+        let intervalId = setInterval(function() {
+
+            dispatch(getBalance(address, authorization))  
+        }, 5000);
+    
+        this.intervals.push(intervalId);      
     }
 
     copyToClipboard = () => {
@@ -47,6 +56,13 @@ class WalletPage extends Component {
         } else {
             dispatch(sendToken(inputAddress, inputValue, authorization)) 
         }
+    }
+
+    componentWillUnmount(){
+
+        this.intervals.forEach(function(intervalId){
+          clearInterval(intervalId);
+        });
     }
 
   render() {
@@ -102,14 +118,10 @@ class WalletPage extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        /*address: state.user.data.address,
+        address: state.user.data.address,
         authorization: state.user.data.authorization,
         etherBalance: state.user.data.etherBalance,
-        tokenBalance: state.user.data.tokenBalance*/
-        address: '0xd8b609b1c37e6be252c0b74c9f80c062f78853ed',
-        authorization: 'eyJhbGMi0xYjYwLTQzJzdWIiOiJib2IyIiwiaWF0IjoxNTI4MTgxMjY2LCJleHAiOjE1MjgxOTAyNjZ9.rV2EU47TUF9NZ3FLUbevqXJ4p-N43nrn3gVYAqwqd1H6FiJznHzOTGEAfkQS120IrDIkgM3ndvrTyP-GLxx6IA',
-        etherBalance: '0 Ether',
-        tokenBalance: '0 Ninja'
+        tokenBalance: state.user.data.tokenBalance
     }
 }
 

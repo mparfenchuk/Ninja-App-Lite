@@ -39,23 +39,23 @@ class RegistrationPage extends Component {
                         <Form onSubmit={this.registrationFormSubmit.bind(this)} horizontal>
                             <FormGroup bsSize="large" controlId="formUsername">
                                 <ControlLabel>Username</ControlLabel>
-                                <FormControl type="text" placeholder="Username" value={inputUsername} onChange={(e) => this.setState({ inputUsername: e.target.value })} required />   
+                                <FormControl type="text" placeholder="Username" autoComplete='username' value={inputUsername} onChange={(e) => this.setState({ inputUsername: e.target.value })} required />   
                             </FormGroup>
                             <FormGroup bsSize="large" controlId="formFirstName">
                                 <ControlLabel>First Name</ControlLabel>
-                                <FormControl type="text" placeholder="FirstName" value={inputFirstName} onChange={(e) => this.setState({ inputFirstName: e.target.value })} required />   
+                                <FormControl type="text" placeholder="FirstName" autoComplete='given-name' value={inputFirstName} onChange={(e) => this.setState({ inputFirstName: e.target.value })} required />   
                             </FormGroup>
                             <FormGroup bsSize="large" controlId="formLastName">
                                 <ControlLabel>Last Name</ControlLabel>
-                                <FormControl type="text" placeholder="LastName" value={inputLastName} onChange={(e) => this.setState({ inputLastName: e.target.value })} required />   
+                                <FormControl type="text" placeholder="LastName" autoComplete='given-name' value={inputLastName} onChange={(e) => this.setState({ inputLastName: e.target.value })} required />   
                             </FormGroup>
                             <FormGroup bsSize="large" controlId="formEmail">
                                 <ControlLabel>Email</ControlLabel>
-                                <FormControl type="email" placeholder="Email" value={inputEmail} onChange={(e) => this.setState({ inputEmail: e.target.value })} required />   
+                                <FormControl type="email" placeholder="Email" autoComplete='email' value={inputEmail} onChange={(e) => this.setState({ inputEmail: e.target.value })} required />   
                             </FormGroup>
                             <FormGroup bsSize="large" controlId="formPassword">
                                 <ControlLabel>Password</ControlLabel>
-                                <FormControl type="password" placeholder="Password" value={inputPassword} onChange={(e) => this.setState({ inputPassword: e.target.value })} required />   
+                                <FormControl type="password" placeholder="Password" autoComplete='current-password' value={inputPassword} onChange={(e) => this.setState({ inputPassword: e.target.value })} required />   
                             </FormGroup>
                             <FormGroup>
                                 <Button type="submit" bsSize="large" block>REGISTER</Button>

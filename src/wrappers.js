@@ -14,7 +14,7 @@ export const UserIsAuthenticated = connectedRouterRedirect({
 })
 
 export const UserIsNotAuthenticated = connectedRouterRedirect({
-    authenticatedSelector: state => state.user !== null && state.user.data === null,
+    authenticatedSelector: state => state.user.data === null,
     redirectAction: routerActions.replace,
     redirectPath: (state, ownProps) => locationHelper.getRedirectQueryParam(ownProps) || '/wallet',
     wrapperDisplayName: 'UserIsNotAuthenticated',
@@ -23,13 +23,13 @@ export const UserIsNotAuthenticated = connectedRouterRedirect({
 
 // UI Component Wrappers
 export const VisibleOnlyAuth = connectedAuthWrapper({
-    authenticatedSelector: state => state.user !== null && state.user.data !== null,
+    authenticatedSelector: state => state.user.data !== null,
     wrapperDisplayName: 'VisibleOnlyAuth',
     FailureComponent: null
 })
 
 export const HiddenOnlyAuth = connectedAuthWrapper({
-    authenticatedSelector: state => state.user !== null && state.user.data === null,
+    authenticatedSelector: state => state.user.data === null,
     wrapperDisplayName: 'HiddenOnlyAuth',
     FailureComponent: null
 })
