@@ -6,8 +6,7 @@ import { sendEther } from '../actions/sendEther'
 import { sendToken } from '../actions/sendToken'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { Row, Col, Form, FormGroup, FormControl, ControlLabel, Button, Radio, Alert } from 'react-bootstrap';
-
-var ethereum_address = require('ethereum-address');
+import { isAddress } from '../utils/checkAddress'
 
 class WalletPage extends Component {
 
@@ -64,7 +63,8 @@ class WalletPage extends Component {
         let { inputAddress, inputValue, radioValue } = this.state
         let { dispatch, authorization } = this.props
 
-        if (!ethereum_address.isAddress(inputAddress)) {
+        
+        if (!isAddress(inputAddress)) {
             return this.setState({ messageShow: true, errorShow: true, messageText: 'Address is invalid.' })
         }
         
@@ -73,12 +73,12 @@ class WalletPage extends Component {
         }
 
         this.setState({ messageShow: false, errorShow: false, messageText: '' })
-
+/*
         if (radioValue === 'ether'){
             dispatch(sendEther(inputAddress, inputValue, authorization)) 
         } else {
             dispatch(sendToken(inputAddress, inputValue, authorization)) 
-        }
+        }*/
     }
 
     componentWillUnmount(){

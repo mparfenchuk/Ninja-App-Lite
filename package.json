@@ -4,8 +4,8 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
-    "ethereum-address": "0.0.4",
     "ethereumjs-units": "^0.2.0",
+    "js-sha3": "^0.7.0",
     "react": "^16.4.0",
     "react-bootstrap": "^0.32.1",
     "react-copy-to-clipboard": "^5.0.1",
